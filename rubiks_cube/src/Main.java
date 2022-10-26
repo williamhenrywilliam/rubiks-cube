@@ -9,8 +9,6 @@ public class Main {
         Cube cube = new Cube();
 
         cube.printCube();
-
-
         cube.printMove("Rotate Right Face");
         cube.turnR();
         cube.printCube();
@@ -46,6 +44,24 @@ public class Main {
         cube.printCube();
         cube.printMove("Rotate Down Inverse ");
         cube.turnDInverse();
+        cube.printCube();
+        cube.printMove("Rotate Front Face");
+        cube.turnF();
+        cube.printCube();
+        cube.printMove("Rotate Front Face twice");
+        cube.turnF2();
+        cube.printCube();
+        cube.printMove("Rotate Front Inverse ");
+        cube.turnFInverse();
+        cube.printCube();
+        cube.printMove("Rotate Back Face");
+        cube.turnB();
+        cube.printCube();
+        cube.printMove("Rotate Back Face twice");
+        cube.turnB2();
+        cube.printCube();
+        cube.printMove("Rotate Back Inverse ");
+        cube.turnBInverse();
         cube.printCube();
 
 //below is the last curly brace of main

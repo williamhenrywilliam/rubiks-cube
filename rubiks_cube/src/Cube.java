@@ -695,7 +695,314 @@ public class Cube {
             rightFace[i] = tempRightFace[i];
         }
     }
-
+    public void turnF(){
+        //Front turn affects 5 faces of the cube, all but the Back face
+        //create temporary arrays for the faces. need to create new String arrays so that the TEMP and originals don't point to the same place on the heap
+        for (int i=0; i < frontFace.length; i++) {
+            tempFrontFace[i] = frontFace[i];
+            tempDownFace[i] = downFace[i];
+            tempLeftFace[i] = leftFace[i];
+            tempUpperFace[i] = upperFace[i];
+            tempRightFace[i] = rightFace[i];
+        }
+        /* Front 1,2,3,4,5,6,7,8,9
+        1 = 7
+        2 = 4
+        3 = 1
+        4 = 8
+        5 = 5
+        6 = 2
+        7 = 9
+        8 = 6
+        9 = 3
+        subtract 1 from all for array indexing
+        */
+        tempFrontFace[0] = frontFace[6];
+        tempFrontFace[1] = frontFace[3];
+        tempFrontFace[2] = frontFace[0];
+        tempFrontFace[3] = frontFace[7];
+        tempFrontFace[5] = frontFace[1];
+        tempFrontFace[6] = frontFace[8];
+        tempFrontFace[7] = frontFace[5];
+        tempFrontFace[8] = frontFace[2];
+        /*Upper face 7,8,9
+        7 = Left 9
+        8 = Left 6
+        9 = Left 3
+        subtract 1 from all for array indexing
+         */
+        tempUpperFace[6] = leftFace[8];
+        tempUpperFace[7] = leftFace[5];
+        tempUpperFace[8] = leftFace[2];
+        /*Down face 1,2,3
+        1 = Right 7
+        2 = Right 4
+        3 = Right 1
+        subtract 1 from all for array indexing
+         */
+        tempDownFace[0] = rightFace[6];
+        tempDownFace[1] = rightFace[3];
+        tempDownFace[2] = rightFace[0];
+        /*Right face 1,4,7
+        1 = Upper 7
+        4 = Upper 8
+        7 = Upper 9
+        subtract 1 from all for array indexing
+         */
+        tempRightFace[0] = upperFace[6];
+        tempRightFace[3] = upperFace[7];
+        tempRightFace[6] = upperFace[8];
+        /*Left face 3,6,9
+        3 = Down 1
+        6 = Down 2
+        9 = Down 3
+        subtract 1 from all for array indexing
+         */
+        tempLeftFace[2] = downFace[0];
+        tempLeftFace[5] = downFace[1];
+        tempLeftFace[8] = downFace[2];
+        //update the original faces to match the temp ones
+        for (int i=0; i < frontFace.length; i++) {
+            frontFace[i] = tempFrontFace[i];
+            downFace[i] = tempDownFace[i];
+            leftFace[i] = tempLeftFace[i];
+            upperFace[i] = tempUpperFace[i];
+            rightFace[i] = tempRightFace[i];
+        }
+    }
+    public void turnF2() {
+        turnF();
+        turnF();
+    }
+    public void turnFInverse(){
+        //Front Inverse turn affects 5 faces of the cube, all but the Back face
+        //create temporary arrays for the faces. need to create new String arrays so that the TEMP and originals don't point to the same place on the heap
+        for (int i=0; i < frontFace.length; i++) {
+            tempFrontFace[i] = frontFace[i];
+            tempDownFace[i] = downFace[i];
+            tempLeftFace[i] = leftFace[i];
+            tempUpperFace[i] = upperFace[i];
+            tempRightFace[i] = rightFace[i];
+        }
+        /* Front 1,2,3,4,5,6,7,8,9
+        1 = 3
+        2 = 6
+        3 = 9
+        4 = 2
+        5 = 5 (unchanged)
+        6 = 8
+        7 = 1
+        8 = 4
+        9 = 7
+        subtract 1 from all for array indexing
+        */
+        tempFrontFace[0] = frontFace[2];
+        tempFrontFace[1] = frontFace[5];
+        tempFrontFace[2] = frontFace[8];
+        tempFrontFace[3] = frontFace[1];
+        tempFrontFace[5] = frontFace[7];
+        tempFrontFace[6] = frontFace[0];
+        tempFrontFace[7] = frontFace[3];
+        tempFrontFace[8] = frontFace[6];
+        /*Upper face 7,8,9
+        7 = Right 1
+        8 = Right 4
+        9 = Right 7
+        subtract 1 from all for array indexing
+         */
+        tempUpperFace[6] = rightFace[0];
+        tempUpperFace[7] = rightFace[3];
+        tempUpperFace[8] = rightFace[6];
+        /*Down face 1,2,3
+        1 = Left 3
+        2 = Left 6
+        3 = Left 9
+        subtract 1 from all for array indexing
+         */
+        tempDownFace[0] = leftFace[2];
+        tempDownFace[1] = leftFace[5];
+        tempDownFace[2] = leftFace[8];
+        /*Right face 1,4,7
+        1 = Down 3
+        4 = Down 2
+        7 = Down 1
+        subtract 1 from all for array indexing
+         */
+        tempRightFace[0] = downFace[2];
+        tempRightFace[3] = downFace[1];
+        tempRightFace[6] = downFace[0];
+        /*Left face 3,6,9
+        3 = Upper 9
+        6 = Upper 8
+        9 = Upper 7
+        subtract 1 from all for array indexing
+         */
+        tempLeftFace[2] = upperFace[8];
+        tempLeftFace[5] = upperFace[7];
+        tempLeftFace[8] = upperFace[6];
+        //update the original faces to match the temp ones
+        for (int i=0; i < frontFace.length; i++) {
+            frontFace[i] = tempFrontFace[i];
+            downFace[i] = tempDownFace[i];
+            leftFace[i] = tempLeftFace[i];
+            upperFace[i] = tempUpperFace[i];
+            rightFace[i] = tempRightFace[i];
+        }
+    }
+    public void turnB(){
+        //Back turn affects 5 faces of the cube, all but the Front face
+        //create temporary arrays for the faces. need to create new String arrays so that the TEMP and originals don't point to the same place on the heap
+        for (int i=0; i < backFace.length; i++) {
+            tempBackFace[i] = backFace[i];
+            tempDownFace[i] = downFace[i];
+            tempLeftFace[i] = leftFace[i];
+            tempUpperFace[i] = upperFace[i];
+            tempRightFace[i] = rightFace[i];
+        }
+        /* Back 1,2,3,4,5,6,7,8,9
+        1 = 7
+        2 = 4
+        3 = 1
+        4 = 8
+        5 = 5
+        6 = 2
+        7 = 9
+        8 = 6
+        9 = 3
+        subtract 1 from all for array indexing
+        */
+        tempBackFace[0] = backFace[6];
+        tempBackFace[1] = backFace[3];
+        tempBackFace[2] = backFace[0];
+        tempBackFace[3] = backFace[7];
+        tempBackFace[5] = backFace[1];
+        tempBackFace[6] = backFace[8];
+        tempBackFace[7] = backFace[5];
+        tempBackFace[8] = backFace[2];
+        /*Upper face 1,2,3
+        1 = Right 3
+        2 = Right 6
+        3 = Right 9
+        subtract 1 from all for array indexing
+         */
+        tempUpperFace[0] = rightFace[2];
+        tempUpperFace[1] = rightFace[5];
+        tempUpperFace[2] = rightFace[8];
+        /*Down face 7,8,9
+        7 = Left 1
+        8 = Left 4
+        9 = Left 7
+        subtract 1 from all for array indexing
+         */
+        tempDownFace[6] = leftFace[0];
+        tempDownFace[7] = leftFace[3];
+        tempDownFace[8] = leftFace[6];
+        /*Right face 3,6,9
+        3 = Down 9
+        6 = Down 8
+        9 = Down 7
+        subtract 1 from all for array indexing
+         */
+        tempRightFace[2] = downFace[8];
+        tempRightFace[5] = downFace[7];
+        tempRightFace[8] = downFace[6];
+        /*Left face 1,4,7
+        1 = Upper 3
+        4 = Upper 2
+        7 = Upper 1
+        subtract 1 from all for array indexing
+         */
+        tempLeftFace[0] = upperFace[2];
+        tempLeftFace[3] = upperFace[1];
+        tempLeftFace[6] = upperFace[0];
+        //update the original faces to match the temp ones
+        for (int i=0; i < backFace.length; i++) {
+            backFace[i] = tempBackFace[i];
+            downFace[i] = tempDownFace[i];
+            leftFace[i] = tempLeftFace[i];
+            upperFace[i] = tempUpperFace[i];
+            rightFace[i] = tempRightFace[i];
+        }
+    }
+    public void turnB2() {
+        turnB();
+        turnB();
+    }
+    public void turnBInverse(){
+        //Back Inverse turn affects 5 faces of the cube, all but the Front face
+        //create temporary arrays for the faces. need to create new String arrays so that the TEMP and originals don't point to the same place on the heap
+        for (int i=0; i < backFace.length; i++) {
+            tempBackFace[i] = backFace[i];
+            tempDownFace[i] = downFace[i];
+            tempLeftFace[i] = leftFace[i];
+            tempUpperFace[i] = upperFace[i];
+            tempRightFace[i] = rightFace[i];
+        }
+        /* Back 1,2,3,4,5,6,7,8,9
+        1 = 3
+        2 = 6
+        3 = 9
+        4 = 2
+        5 = 5 (unchanged)
+        6 = 8
+        7 = 1
+        8 = 4
+        9 = 7
+        subtract 1 from all for array indexing
+        */
+        tempBackFace[0] = backFace[2];
+        tempBackFace[1] = backFace[5];
+        tempBackFace[2] = backFace[8];
+        tempBackFace[3] = backFace[1];
+        tempBackFace[5] = backFace[7];
+        tempBackFace[6] = backFace[0];
+        tempBackFace[7] = backFace[3];
+        tempBackFace[8] = backFace[6];
+        /*Upper face 1,2,3
+        1 = Left 7
+        2 = Left 4
+        3 = Left 1
+        subtract 1 from all for array indexing
+         */
+        tempUpperFace[0] = leftFace[6];
+        tempUpperFace[1] = leftFace[3];
+        tempUpperFace[2] = leftFace[0];
+        /*Down face 7,8,9
+        7 = Right 9
+        8 = Right 6
+        9 = Right 3
+        subtract 1 from all for array indexing
+         */
+        tempDownFace[6] = rightFace[8];
+        tempDownFace[7] = rightFace[5];
+        tempDownFace[8] = rightFace[2];
+        /*Right face 3,6,9
+        3 = Upper 1
+        6 = Upper 2
+        9 = Upper 3
+        subtract 1 from all for array indexing
+         */
+        tempRightFace[2] = upperFace[0];
+        tempRightFace[5] = upperFace[1];
+        tempRightFace[8] = upperFace[2];
+        /*Left face 1,4,7
+        1 = Down 7
+        4 = Down 8
+        7 = Down 9
+        subtract 1 from all for array indexing
+         */
+        tempLeftFace[0] = downFace[6];
+        tempLeftFace[3] = downFace[7];
+        tempLeftFace[6] = downFace[8];
+        //update the original faces to match the temp ones
+        for (int i=0; i < backFace.length; i++) {
+            backFace[i] = tempBackFace[i];
+            downFace[i] = tempDownFace[i];
+            leftFace[i] = tempLeftFace[i];
+            upperFace[i] = tempUpperFace[i];
+            rightFace[i] = tempRightFace[i];
+        }
+    }
 
     //below is the final curly brace of the class
 }
