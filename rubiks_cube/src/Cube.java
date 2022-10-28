@@ -1,3 +1,5 @@
+import java.lang.Math;
+
 public class Cube {
     //variables
     /*Each face has 9 sides. the arrays have a length of 9. the orientation for the face is as if that face is currently facing you
@@ -24,6 +26,8 @@ public class Cube {
     private String[] rightFace = {"Yellow", "Yellow", "Yellow", "Yellow", "Yellow", "Yellow", "Yellow", "Yellow", "Yellow"};
     private String[] upperFace = {"Blue", "Blue", "Blue", "Blue", "Blue", "Blue", "Blue", "Blue", "Blue"};
     private String[] downFace = {"Green", "Green", "Green", "Green", "Green", "Green", "Green", "Green", "Green"};
+    private String turnList = "";
+    private int numberOfTurnTypes = 14; //6 faces + middle + inverses
 
     private String[] tempFrontFace = new String[9];
     private String[] tempBackFace = new String[9];
@@ -41,6 +45,10 @@ public class Cube {
 //        String[] upperFace = {"Blue", "Blue", "Blue", "Blue", "Blue", "Blue", "Blue", "Blue", "Blue"};
 //        String[] downFace = {"Green", "Green", "Green", "Green", "Green", "Green", "Green", "Green", "Green"};
     }
+
+    //getters and setters
+    public String getTurnList() {return turnList;}
+    public void setTurnList(String turnList){this.turnList = turnList;}
 
     //methods
     public void printFace(String[] faceArray){
@@ -77,6 +85,57 @@ public class Cube {
         System.out.println("**********************");
         System.out.println(moveDescription);
         System.out.println("**********************");
+    }
+    public void randomize(){
+        double selector;
+
+        for (int i = 0; i < 25; i++) {
+            selector = ((Math.random()) * numberOfTurnTypes) + 1;
+            switch ((int) selector) {
+                case 1:
+                    turnR();
+                    break;
+                case 2:
+                    turnRInverse();
+                    break;
+                case 3:
+                    turnL();
+                    break;
+                case 4:
+                    turnLInverse();
+                    break;
+                case 5:
+                    turnF();
+                    break;
+                case 6:
+                    turnFInverse();
+                    break;
+                case 7:
+                    turnB();
+                    break;
+                case 8:
+                    turnBInverse();
+                    break;
+                case 9:
+                    turnU();
+                    break;
+                case 10:
+                    turnUInverse();
+                    break;
+                case 11:
+                    turnD();
+                    break;
+                case 12:
+                    turnDInverse();
+                    break;
+                case 13:
+                    turnM();
+                    break;
+                case 14:
+                    turnMInverse();
+                    break;
+            }
+        }
     }
 
     public void turnR(){
@@ -153,6 +212,7 @@ public class Cube {
             upperFace[i] = tempUpperFace[i];
             downFace[i] = tempDownFace[i];
         }
+        turnList += "R,";
     }
     public void turnR2(){
         turnR();
@@ -232,6 +292,8 @@ public class Cube {
             upperFace[i] = tempUpperFace[i];
             downFace[i] = tempDownFace[i];
         }
+
+        turnList += "R',";
     }
     public void turnL(){
         //Left turn affects 5 faces of the cube, all but the Right face
@@ -307,6 +369,7 @@ public class Cube {
             upperFace[i] = tempUpperFace[i];
             downFace[i] = tempDownFace[i];
         }
+        turnList += "L,";
     }
     public void turnL2(){
         turnL();
@@ -386,6 +449,7 @@ public class Cube {
             upperFace[i] = tempUpperFace[i];
             downFace[i] = tempDownFace[i];
         }
+        turnList += "L',";
     }
     public void turnU(){
         //Upper turn affects 5 faces of the cube, all but the Down face
@@ -461,6 +525,7 @@ public class Cube {
             upperFace[i] = tempUpperFace[i];
             rightFace[i] = tempRightFace[i];
         }
+        turnList += "U,";
     }
     public void turnU2(){
         turnU();
@@ -540,6 +605,7 @@ public class Cube {
             upperFace[i] = tempUpperFace[i];
             rightFace[i] = tempRightFace[i];
         }
+        turnList += "U',";
     }
     public void turnD(){
         //Down turn affects 5 faces of the cube, all but the Upper face
@@ -615,6 +681,7 @@ public class Cube {
             downFace[i] = tempDownFace[i];
             rightFace[i] = tempRightFace[i];
         }
+        turnList += "D,";
     }
     public void turnD2(){
         turnD();
@@ -694,6 +761,7 @@ public class Cube {
             downFace[i] = tempDownFace[i];
             rightFace[i] = tempRightFace[i];
         }
+        turnList += "D',";
     }
     public void turnF(){
         //Front turn affects 5 faces of the cube, all but the Back face
@@ -769,6 +837,7 @@ public class Cube {
             upperFace[i] = tempUpperFace[i];
             rightFace[i] = tempRightFace[i];
         }
+        turnList += "F,";
     }
     public void turnF2() {
         turnF();
@@ -848,6 +917,7 @@ public class Cube {
             upperFace[i] = tempUpperFace[i];
             rightFace[i] = tempRightFace[i];
         }
+        turnList += "F',";
     }
     public void turnB(){
         //Back turn affects 5 faces of the cube, all but the Front face
@@ -923,6 +993,7 @@ public class Cube {
             upperFace[i] = tempUpperFace[i];
             rightFace[i] = tempRightFace[i];
         }
+        turnList += "B,";
     }
     public void turnB2() {
         turnB();
@@ -1002,7 +1073,123 @@ public class Cube {
             upperFace[i] = tempUpperFace[i];
             rightFace[i] = tempRightFace[i];
         }
+        turnList += "B',";
     }
+    public void turnM(){
+        //Middle turn affects 4 faces of the cube, all but the left and right faces
+        //create temporary arrays for the faces. need to create new String arrays so that the TEMP and originals don't point to the same place on the heap
+        for (int i=0; i < frontFace.length; i++) {
+            tempBackFace[i] = backFace[i];
+            tempDownFace[i] = downFace[i];
+            tempUpperFace[i] = upperFace[i];
+            tempFrontFace[i] = frontFace[i];
+        }
+        /* Front 2,5,8
+        2 = Upper 2
+        5 = Upper 5
+        8 = Upper 8
+        subtract 1 from all for array indexing
+        */
+        tempFrontFace[1] = upperFace[1];
+        tempFrontFace[4] = upperFace[4];
+        tempFrontFace[7] = upperFace[7];
+        /*Upper face 2,5,8
+        2 = Back 8
+        5 = Back 5
+        8 = Back 2
+        subtract 1 from all for array indexing
+         */
+        tempUpperFace[1] = backFace[7];
+        tempUpperFace[4] = backFace[4];
+        tempUpperFace[7] = backFace[1];
+        /*Down face 2,5,8
+        2 = Front 2
+        5 = Front 5
+        8 = Front 8
+        subtract 1 from all for array indexing
+         */
+        tempDownFace[1] = frontFace[1];
+        tempDownFace[4] = frontFace[4];
+        tempDownFace[7] = frontFace[7];
+        /*Back face 2,5,8
+        2 = Down 8
+        5 = Down 5
+        8 = Down 2
+        subtract 1 from all for array indexing
+         */
+        tempBackFace[1] = downFace[7];
+        tempBackFace[4] = downFace[4];
+        tempBackFace[7] = downFace[1];
+        //update the original faces to match the temp ones
+        for (int i=0; i < backFace.length; i++) {
+            backFace[i] = tempBackFace[i];
+            downFace[i] = tempDownFace[i];
+            upperFace[i] = tempUpperFace[i];
+            frontFace[i] = tempFrontFace[i];
+        }
+        turnList += "M,";
+    }
+    public void turnM2(){
+        turnM();
+        turnM();
+    }
+    public void turnMInverse(){
+        //Middle Inverse turn affects 4 faces of the cube, all but the left and right faces
+        //create temporary arrays for the faces. need to create new String arrays so that the TEMP and originals don't point to the same place on the heap
+        for (int i=0; i < frontFace.length; i++) {
+            tempBackFace[i] = backFace[i];
+            tempDownFace[i] = downFace[i];
+            tempUpperFace[i] = upperFace[i];
+            tempFrontFace[i] = frontFace[i];
+        }
+        /* Front 2,5,8
+        2 = Down 2
+        5 = Down 5
+        8 = Down 8
+        subtract 1 from all for array indexing
+        */
+        tempFrontFace[1] = downFace[1];
+        tempFrontFace[4] = downFace[4];
+        tempFrontFace[7] = downFace[7];
+        /*Upper face 2,5,8
+        2 = Front 2
+        5 = Front 5
+        8 = Front 8
+        subtract 1 from all for array indexing
+         */
+        tempUpperFace[1] = frontFace[1];
+        tempUpperFace[4] = frontFace[4];
+        tempUpperFace[7] = frontFace[7];
+        /*Down face 2,5,8
+        2 = Back 8
+        5 = Back 5
+        8 = Back 2
+        subtract 1 from all for array indexing
+         */
+        tempDownFace[1] = backFace[7];
+        tempDownFace[4] = backFace[4];
+        tempDownFace[7] = backFace[1];
+        /*Back face 2,5,8
+        2 = Upper 8
+        5 = Upper 5
+        8 = Upper 2
+        subtract 1 from all for array indexing
+         */
+        tempBackFace[1] = upperFace[7];
+        tempBackFace[4] = upperFace[4];
+        tempBackFace[7] = upperFace[1];
+        //update the original faces to match the temp ones
+        for (int i=0; i < backFace.length; i++) {
+            backFace[i] = tempBackFace[i];
+            downFace[i] = tempDownFace[i];
+            upperFace[i] = tempUpperFace[i];
+            frontFace[i] = tempFrontFace[i];
+        }
+        turnList += "M',";
+    }
+
+
+
 
     //below is the final curly brace of the class
 }
