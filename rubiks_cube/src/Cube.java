@@ -12,9 +12,12 @@ public class Cube {
         [6] is Bottom Left
         [7] is Bottom Middle
         [8] is Bottom Right
+
+     number the corners
      */
 
-    //    private String[] frontFace = new String[9];
+
+//    private String[] frontFace = new String[9];
 //    private String[] backFace = new String[9];
 //    private String[] leftFace = new String[9];
 //    private String[] rightFace = new String[9];
@@ -26,6 +29,7 @@ public class Cube {
     private String[] rightFace = {"Yellow", "Yellow", "Yellow", "Yellow", "Yellow", "Yellow", "Yellow", "Yellow", "Yellow"};
     private String[] upperFace = {"Blue", "Blue", "Blue", "Blue", "Blue", "Blue", "Blue", "Blue", "Blue"};
     private String[] downFace = {"Green", "Green", "Green", "Green", "Green", "Green", "Green", "Green", "Green"};
+
     private String turnList = "";
     private int numberOfTurnTypes = 14; //6 faces + middle + inverses
 
@@ -138,6 +142,7 @@ public class Cube {
         }
     }
 
+    //Turn Methods
     public void turnR(){
         //Right turn affects 5 faces of the cube, all but the Left face
         //create temporary arrays for the faces. need to create new String arrays so that the TEMP and originals don't point to the same place on the heap
@@ -1188,7 +1193,94 @@ public class Cube {
         turnList += "M',";
     }
 
+    //Algorithms
+        //general
+    public void cornerSwap(){
+        turnR();
+        turnUInverse();
+        turnRInverse();
+        turnUInverse();
+        turnR();
+        turnU();
+        turnRInverse();
+        turnFInverse();
+        turnR();
+        turnU();
+        turnRInverse();
+        turnUInverse();
+        turnRInverse();
+        turnF();
+        turnR();
+    }
+    public void edgeSwap(){
+        turnM2();
+    }
+    public void paritySwap(){
+        turnDInverse();
+        turnL2();
+        turnD();
+        turnM2();
+        turnDInverse();
+        turnL2();
+        turnD();
+    }
+    public void starU(){
+        turnU();
+        turnR2();
+        turnUInverse();
+    }
 
+        //special algorithms for edge pieces
+    public void edgeAlgS(){
+        turnM2();
+        turnD();
+        starU();
+        turnMInverse();
+        starU();
+        turnM();
+        turnDInverse();
+    }
+    public void edgeAlgI(){
+        turnD();
+        turnMInverse();
+        starU();
+        turnM();
+        starU();
+        turnDInverse();
+        turnM2();
+    }
+    public void edgeAlgC(){
+        turnU2();
+        turnMInverse();
+        turnU2();
+        turnMInverse();
+    }
+    public void edgeAlgW(){
+        turnM();
+        turnU2();
+        turnM();
+        turnU2();
+    }
+    public void edgeAlgQ(){
+        turnBInverse();
+        turnR();
+        turnB();
+        starU();
+        turnM2();
+        starU();
+        turnBInverse();
+        turnRInverse();
+        turnB();
+    }
+
+        //Algs for the various corner pieces. These algs consist of: 1. set-up moves, 2. the cornerSwap alg, 3. reversing the set-up moves.
+        //To note, the letter P has no alg of its own because it is the same as the cornerSwap
+
+    public void cornerAlgL(){
+        turnD();
+        cornerSwap();
+        turnDInverse();
+    }
 
 
     //below is the final curly brace of the class
