@@ -17,12 +17,6 @@ public class Cube {
      */
 
 
-//    private String[] frontFace = new String[9];
-//    private String[] backFace = new String[9];
-//    private String[] leftFace = new String[9];
-//    private String[] rightFace = new String[9];
-//    private String[] upperFace = new String[9];
-//    private String[] downFace = new String[9];
     private String[] frontFace = {"Red", "Red", "Red", "Red", "Red", "Red", "Red", "Red", "Red"};
     private String[] backFace = {"Orange", "Orange", "Orange", "Orange", "Orange", "Orange", "Orange", "Orange", "Orange"};
     private String[] leftFace = {"White", "White", "White", "White", "White", "White", "White", "White", "White"};
@@ -41,18 +35,23 @@ public class Cube {
     private String[] tempDownFace = new String[9];
 
     //constructor
-    public Cube() {
-//        String[] frontFace = {"Red", "Red", "Red", "Red", "Red", "Red", "Red", "Red", "Red"};
-//        String[] backFace = {"Orange", "Orange", "Orange", "Orange", "Orange", "Orange", "Orange", "Orange", "Orange"};
-//        String[] leftFace = {"White", "White", "White", "White", "White", "White", "White", "White", "White"};
-//        String[] rightFace = {"Yellow", "Yellow", "Yellow", "Yellow", "Yellow", "Yellow", "Yellow", "Yellow", "Yellow"};
-//        String[] upperFace = {"Blue", "Blue", "Blue", "Blue", "Blue", "Blue", "Blue", "Blue", "Blue"};
-//        String[] downFace = {"Green", "Green", "Green", "Green", "Green", "Green", "Green", "Green", "Green"};
-    }
+    public Cube() {}
 
     //getters and setters
     public String getTurnList() {return turnList;}
     public void setTurnList(String turnList){this.turnList = turnList;}
+    public String[] getFrontFace() {return frontFace;}
+    public String[] getBackFace() {return backFace;}
+    public String[] getUpperFace() {return upperFace;}
+    public String[] getDownFace() {return downFace;}
+    public String[] getRightFace() {return rightFace;}
+    public String[] getLeftFace() {return leftFace;}
+    public String[] getTempFrontFace() {return tempFrontFace;}
+    public String[] getTempBackFace() {return tempBackFace;}
+    public String[] getTempUpperFace() {return tempUpperFace;}
+    public String[] getTempDownFace() {return tempDownFace;}
+    public String[] getTempRightFace() {return tempRightFace;}
+    public String[] getTempLeftFace() {return tempLeftFace;}
 
     //methods
     public void printFace(String[] faceArray){
@@ -1274,14 +1273,133 @@ public class Cube {
     }
 
         //Algs for the various corner pieces. These algs consist of: 1. set-up moves, 2. the cornerSwap alg, 3. reversing the set-up moves.
-        //To note, the letter P has no alg of its own because it is the same as the cornerSwap
+        //To note, the letter P has no alg of its own because it is the same as the cornerSwap. there is also no agl for A,E, or R because the method solves all other pieces first and then A is inherently solved
 
+    public void cornerAlgB(){
+        turnR();
+        turnDInverse();
+        cornerSwap();
+        turnD();
+        turnRInverse();
+    }
+    public void cornerAlgC(){
+        turnF();
+        cornerSwap();
+        turnF();
+    }
+    public void cornerAlgD(){
+        turnF();
+        turnRInverse();
+        cornerSwap();
+        turnR();
+        turnFInverse();
+    }
+    public void cornerAlgF(){
+        turnF2();
+        cornerSwap();
+        turnF2();
+    }
+    public void cornerAlgG(){
+        turnF2();
+        turnRInverse();
+        cornerSwap();
+        turnR();
+        turnF2();
+    }
+    public void cornerAlgH(){
+        turnD2();
+        cornerSwap();
+        turnD2();
+    }
+    public void cornerAlgI(){
+        turnFInverse();
+        turnD();
+        cornerSwap();
+        turnDInverse();
+        turnF();
+    }
+    public void cornerAlgJ(){
+        turnF2();
+        turnD();
+        cornerSwap();
+        turnDInverse();
+        turnF2();
+    }
+    public void cornerAlgK(){
+        turnF();
+        turnD();
+        cornerSwap();
+        turnDInverse();
+        turnFInverse();
+    }
     public void cornerAlgL(){
         turnD();
         cornerSwap();
         turnDInverse();
     }
-
+    public void cornerAlgM(){
+        turnRInverse();
+        cornerSwap();
+        turnR();
+    }
+    public void cornerAlgN(){
+        turnR2();
+        cornerSwap();
+        turnR2();
+    }
+    public void cornerAlgO(){
+        turnR();
+        cornerSwap();
+        turnRInverse();
+    }
+    public void cornerAlgP(){
+        cornerSwap();
+    }
+    public void cornerAlgQ(){
+        turnRInverse();
+        turnF();
+        cornerSwap();
+        turnFInverse();
+        turnR();
+    }
+    public void cornerAlgS(){
+        turnDInverse();
+        turnR();
+        cornerSwap();
+        turnRInverse();
+        turnD();
+    }
+    public void cornerAlgT(){
+        turnDInverse();
+        cornerSwap();
+        turnD();
+    }
+    public void cornerAlgU(){
+        turnFInverse();
+        cornerSwap();
+        turnF();
+    }
+    public void cornerAlgV(){
+        turnDInverse();
+        turnFInverse();
+        cornerSwap();
+        turnF();
+        turnD();
+    }
+    public void cornerAlgW(){
+        turnD2();
+        turnFInverse();
+        cornerSwap();
+        turnF();
+        turnD2();
+    }
+    public void cornerAlgX(){
+        turnD();
+        turnFInverse();
+        cornerSwap();
+        turnF();
+        turnDInverse();
+    }
 
     //below is the final curly brace of the class
 }
