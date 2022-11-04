@@ -17,22 +17,24 @@ public class Cube {
      */
 
 
-    private String[] frontFace = {"Red", "Red", "Red", "Red", "Red", "Red", "Red", "Red", "Red"};
+    private Pieces[] piecesFrontFace = {Pieces.ICORNER, Pieces.IEDGE, Pieces.JCORNER, Pieces.LEDGE, Pieces.REDCENTER, Pieces.JEDGE, Pieces.LCORNER, Pieces.KEDGE, Pieces.KCORNER};
+    private String[] frontFace = {Pieces.ICORNER.color, Pieces.IEDGE.color, Pieces.JCORNER.color, Pieces.LEDGE.color, Pieces.REDCENTER.color, Pieces.JEDGE.color, Pieces.LCORNER.color, Pieces.KEDGE.color, Pieces.KCORNER.color};
     private String[] backFace = {"Orange", "Orange", "Orange", "Orange", "Orange", "Orange", "Orange", "Orange", "Orange"};
     private String[] leftFace = {"White", "White", "White", "White", "White", "White", "White", "White", "White"};
     private String[] rightFace = {"Yellow", "Yellow", "Yellow", "Yellow", "Yellow", "Yellow", "Yellow", "Yellow", "Yellow"};
     private String[] upperFace = {"Blue", "Blue", "Blue", "Blue", "Blue", "Blue", "Blue", "Blue", "Blue"};
     private String[] downFace = {"Green", "Green", "Green", "Green", "Green", "Green", "Green", "Green", "Green"};
-
-    private String turnList = "";
-    private int numberOfTurnTypes = 14; //6 faces + middle + inverses
-
     private String[] tempFrontFace = new String[9];
     private String[] tempBackFace = new String[9];
     private String[] tempRightFace = new String[9];
     private String[] tempLeftFace = new String[9];
     private String[] tempUpperFace = new String[9];
     private String[] tempDownFace = new String[9];
+    private String turnList = "";
+    private int numberOfTurnTypes = 14; //6 faces + middle + inverses
+    //TODO
+    private Pieces cornerHotSeat;
+    private Pieces edgeHotSeat;
 
     //constructor
     public Cube() {}
@@ -53,7 +55,8 @@ public class Cube {
     public String[] getTempRightFace() {return tempRightFace;}
     public String[] getTempLeftFace() {return tempLeftFace;}
 
-    //methods
+    //Methods
+        //print methods
     public void printFace(String[] faceArray){
         for (int i = 0; i < faceArray.length; i++) {
             System.out.print(faceArray[i]);
@@ -89,6 +92,7 @@ public class Cube {
         System.out.println(moveDescription);
         System.out.println("**********************");
     }
+        //Cube changers
     public void randomize(){
         double selector;
 
@@ -138,6 +142,15 @@ public class Cube {
                     turnMInverse();
                     break;
             }
+        }
+    }
+    public void solveCorners(){
+    //TODO
+        //while
+        if (cornerHotSeat == Pieces.ACORNER){
+            System.out.println(Pieces.ACORNER.color);
+        } else {
+            System.out.println("nice try");
         }
     }
 

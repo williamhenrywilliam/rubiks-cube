@@ -9,10 +9,14 @@ public class Main {
         Cube cube = new Cube();
 
         cube.printCube();
-        cube.printMove("Corner Swap Alg");
-        cube.edgeAlgI();
-        System.out.println(cube.getTurnList());
-        cube.printCube();
+        cube.solveCorners();
+
+
+
+//        cube.printMove("Corner Swap Alg");
+//        cube.edgeAlgI();
+//        System.out.println(cube.getTurnList());
+//        cube.printCube();
 
 //        cube.printMove("Rotate Right Face");
 //        cube.turnR();
