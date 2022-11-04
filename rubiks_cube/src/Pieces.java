@@ -55,6 +55,7 @@ public enum Pieces {
     GREENCENTER("Green", "GC"),;
 
     String color;
+    String letter;
 
     Pieces (String color, String letter) {
         this.color = color;

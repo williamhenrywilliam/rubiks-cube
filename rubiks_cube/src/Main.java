@@ -9,7 +9,9 @@ public class Main {
         Cube cube = new Cube();
 
         cube.printCube();
-        cube.solveCorners();
+        Pieces[] test = cube.getPiecesFrontFace();
+        System.out.println(test[0].color);
+        System.out.println(test[0].letter);
 
 
 

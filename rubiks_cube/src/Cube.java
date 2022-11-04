@@ -17,6 +17,8 @@ public class Cube {
      */
 
 
+
+
     private Pieces[] piecesFrontFace = {Pieces.ICORNER, Pieces.IEDGE, Pieces.JCORNER, Pieces.LEDGE, Pieces.REDCENTER, Pieces.JEDGE, Pieces.LCORNER, Pieces.KEDGE, Pieces.KCORNER};
     private String[] frontFace = {Pieces.ICORNER.color, Pieces.IEDGE.color, Pieces.JCORNER.color, Pieces.LEDGE.color, Pieces.REDCENTER.color, Pieces.JEDGE.color, Pieces.LCORNER.color, Pieces.KEDGE.color, Pieces.KCORNER.color};
     private String[] backFace = {"Orange", "Orange", "Orange", "Orange", "Orange", "Orange", "Orange", "Orange", "Orange"};
@@ -54,6 +56,9 @@ public class Cube {
     public String[] getTempDownFace() {return tempDownFace;}
     public String[] getTempRightFace() {return tempRightFace;}
     public String[] getTempLeftFace() {return tempLeftFace;}
+    public Pieces[] getPiecesFrontFace() {
+        return piecesFrontFace;
+    }
 
     //Methods
         //print methods
