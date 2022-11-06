@@ -1,3 +1,5 @@
+package com.whycoding.rubikscube;
+
 public class CornerPiece {
     private String pieceType = "Corner";
     private int numberOfsides = 3;

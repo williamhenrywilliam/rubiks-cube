@@ -1,3 +1,5 @@
+package com.whycoding.rubikscube;
+
 import java.lang.Math;
 
 public class Cube {
@@ -16,25 +18,34 @@ public class Cube {
      number the corners
      */
 
+    private Pieces[] frontFace = {Pieces.ICORNER, Pieces.IEDGE, Pieces.JCORNER, Pieces.LEDGE, Pieces.REDCENTER, Pieces.JEDGE, Pieces.LCORNER, Pieces.KEDGE, Pieces.KCORNER};
+    private Pieces[] backFace = {Pieces.QCORNER, Pieces.QEDGE, Pieces.RCORNER, Pieces.TEDGE, Pieces.ORANGECENTER, Pieces.REDGE, Pieces.TCORNER, Pieces.SEDGE, Pieces.SCORNER};
+    private Pieces[] leftFace = {Pieces.ECORNER, Pieces.EEDGE, Pieces.FCORNER, Pieces.HEDGE, Pieces.WHITECENTER, Pieces.FEDGE, Pieces.HCORNER, Pieces.GEDGE, Pieces.GCORNER};
+    private Pieces[] rightFace = {Pieces.MCORNER, Pieces.MEDGE, Pieces.NCORNER, Pieces.PEDGE, Pieces.YELLOWCENTER, Pieces.NEDGE, Pieces.PCORNER, Pieces.OEDGE, Pieces.OCORNER};
+    private Pieces[] upperFace = {Pieces.ACORNER, Pieces.AEDGE, Pieces.BCORNER, Pieces.DEDGE, Pieces.BLUECENTER, Pieces.BEDGE, Pieces.DCORNER, Pieces.CEDGE, Pieces.CCORNER};
+    private Pieces[] downFace = {Pieces.UCORNER, Pieces.UEDGE, Pieces.VCORNER, Pieces.XEDGE, Pieces.GREENCENTER, Pieces.VEDGE, Pieces.XCORNER, Pieces.WEDGE, Pieces.WCORNER};
+
+    private Pieces[] tempFrontFace = new Pieces[9];
+    private Pieces[] tempBackFace = new Pieces[9];
+    private Pieces[] tempRightFace = new Pieces[9];
+    private Pieces[] tempLeftFace = new Pieces[9];
+    private Pieces[] tempUpperFace = new Pieces[9];
+    private Pieces[] tempDownFace = new Pieces[9];
 
 
+    private Pieces[] testFrontFace = {Pieces.ICORNER, Pieces.IEDGE, Pieces.JCORNER, Pieces.LEDGE, Pieces.REDCENTER, Pieces.JEDGE, Pieces.LCORNER, Pieces.KEDGE, Pieces.KCORNER};
+    private Pieces[] testBackFace = {Pieces.QCORNER, Pieces.QEDGE, Pieces.RCORNER, Pieces.TEDGE, Pieces.ORANGECENTER, Pieces.REDGE, Pieces.TCORNER, Pieces.SEDGE, Pieces.SCORNER};
+    private Pieces[] testLeftFace = {Pieces.ECORNER, Pieces.EEDGE, Pieces.FCORNER, Pieces.HEDGE, Pieces.WHITECENTER, Pieces.FEDGE, Pieces.HCORNER, Pieces.GEDGE, Pieces.GCORNER};
+    private Pieces[] testRightFace = {Pieces.MCORNER, Pieces.MEDGE, Pieces.NCORNER, Pieces.PEDGE, Pieces.YELLOWCENTER, Pieces.NEDGE, Pieces.PCORNER, Pieces.OEDGE, Pieces.OCORNER};
+    private Pieces[] testUpperFace = {Pieces.ACORNER, Pieces.AEDGE, Pieces.BCORNER, Pieces.DEDGE, Pieces.BLUECENTER, Pieces.BEDGE, Pieces.DCORNER, Pieces.CEDGE, Pieces.CCORNER};
+    private Pieces[] testDownFace = {Pieces.UCORNER, Pieces.UEDGE, Pieces.VCORNER, Pieces.XEDGE, Pieces.GREENCENTER, Pieces.VEDGE, Pieces.XCORNER, Pieces.WEDGE, Pieces.WCORNER};
 
-    private Pieces[] piecesFrontFace = {Pieces.ICORNER, Pieces.IEDGE, Pieces.JCORNER, Pieces.LEDGE, Pieces.REDCENTER, Pieces.JEDGE, Pieces.LCORNER, Pieces.KEDGE, Pieces.KCORNER};
-    private String[] frontFace = {Pieces.ICORNER.color, Pieces.IEDGE.color, Pieces.JCORNER.color, Pieces.LEDGE.color, Pieces.REDCENTER.color, Pieces.JEDGE.color, Pieces.LCORNER.color, Pieces.KEDGE.color, Pieces.KCORNER.color};
-    private String[] backFace = {"Orange", "Orange", "Orange", "Orange", "Orange", "Orange", "Orange", "Orange", "Orange"};
-    private String[] leftFace = {"White", "White", "White", "White", "White", "White", "White", "White", "White"};
-    private String[] rightFace = {"Yellow", "Yellow", "Yellow", "Yellow", "Yellow", "Yellow", "Yellow", "Yellow", "Yellow"};
-    private String[] upperFace = {"Blue", "Blue", "Blue", "Blue", "Blue", "Blue", "Blue", "Blue", "Blue"};
-    private String[] downFace = {"Green", "Green", "Green", "Green", "Green", "Green", "Green", "Green", "Green"};
-    private String[] tempFrontFace = new String[9];
-    private String[] tempBackFace = new String[9];
-    private String[] tempRightFace = new String[9];
-    private String[] tempLeftFace = new String[9];
-    private String[] tempUpperFace = new String[9];
-    private String[] tempDownFace = new String[9];
+    boolean cubeIsSolved;
+    boolean cornersAreSolved;
+    boolean edgesAreSolved;
     private String turnList = "";
-    private int numberOfTurnTypes = 14; //6 faces + middle + inverses
-    //TODO
+    private int numberOfTurnTypes = 12; //6 faces + inverses
+    //TODO hotseats
     private Pieces cornerHotSeat;
     private Pieces edgeHotSeat;
 
@@ -44,27 +55,30 @@ public class Cube {
     //getters and setters
     public String getTurnList() {return turnList;}
     public void setTurnList(String turnList){this.turnList = turnList;}
-    public String[] getFrontFace() {return frontFace;}
-    public String[] getBackFace() {return backFace;}
-    public String[] getUpperFace() {return upperFace;}
-    public String[] getDownFace() {return downFace;}
-    public String[] getRightFace() {return rightFace;}
-    public String[] getLeftFace() {return leftFace;}
-    public String[] getTempFrontFace() {return tempFrontFace;}
-    public String[] getTempBackFace() {return tempBackFace;}
-    public String[] getTempUpperFace() {return tempUpperFace;}
-    public String[] getTempDownFace() {return tempDownFace;}
-    public String[] getTempRightFace() {return tempRightFace;}
-    public String[] getTempLeftFace() {return tempLeftFace;}
-    public Pieces[] getPiecesFrontFace() {
-        return piecesFrontFace;
+    public Pieces[] getFrontFace() {return frontFace;}
+    public Pieces[] getBackFace() {return backFace;}
+    public Pieces[] getUpperFace() {return upperFace;}
+    public Pieces[] getDownFace() {return downFace;}
+    public Pieces[] getRightFace() {return rightFace;}
+    public Pieces[] getLeftFace() {return leftFace;}
+    public Pieces[] getTempFrontFace() {return tempFrontFace;}
+    public Pieces[] getTempBackFace() {return tempBackFace;}
+    public Pieces[] getTempUpperFace() {return tempUpperFace;}
+    public Pieces[] getTempDownFace() {return tempDownFace;}
+    public Pieces[] getTempRightFace() {return tempRightFace;}
+    public Pieces[] getTempLeftFace() {return tempLeftFace;}
+    public boolean isCubeIsSolved() {
+        return cubeIsSolved;
+    }
+    public void setCubeIsSolved(boolean cubeIsSolved) {
+        this.cubeIsSolved = cubeIsSolved;
     }
 
     //Methods
         //print methods
-    public void printFace(String[] faceArray){
+    public void printFace(Pieces[] faceArray){
         for (int i = 0; i < faceArray.length; i++) {
-            System.out.print(faceArray[i]);
+            System.out.print(faceArray[i].color);
             if(i % 3 == 2) {
                 System.out.println();
             } else {
@@ -97,10 +111,9 @@ public class Cube {
         System.out.println(moveDescription);
         System.out.println("**********************");
     }
-        //Cube changers
+        //Cube state
     public void randomize(){
         double selector;
-
         for (int i = 0; i < 25; i++) {
             selector = ((Math.random()) * numberOfTurnTypes) + 1;
             switch ((int) selector) {
@@ -140,23 +153,262 @@ public class Cube {
                 case 12:
                     turnDInverse();
                     break;
+                /*
                 case 13:
                     turnM();
                     break;
                 case 14:
                     turnMInverse();
                     break;
+                 */
             }
         }
     }
-    public void solveCorners(){
-    //TODO
-        //while
-        if (cornerHotSeat == Pieces.ACORNER){
-            System.out.println(Pieces.ACORNER.color);
-        } else {
-            System.out.println("nice try");
+    public boolean checkCubeIfSolved(){
+        cubeIsSolved = false;
+        if(
+            getFrontFace() == testFrontFace
+            && getBackFace() == testBackFace
+            && getLeftFace() == testLeftFace
+            && getRightFace() == testRightFace
+            && getUpperFace() == testUpperFace
+            && getDownFace() == testDownFace
+        ){
+            cubeIsSolved = true;
         }
+        return cubeIsSolved;
+    }
+    public boolean checkCornersIfSolved(){
+        cornersAreSolved = false;
+        if(
+            getFrontFace()[0] == testFrontFace[0]
+            && getFrontFace()[2] == testFrontFace[2]
+            && getFrontFace()[4] == testFrontFace[4]
+            && getFrontFace()[6] == testFrontFace[6]
+            && getFrontFace()[8] == testFrontFace[8]
+
+            && getBackFace()[0] == testBackFace[0]
+            && getBackFace()[2] == testBackFace[2]
+            && getBackFace()[4] == testBackFace[4]
+            && getBackFace()[6] == testBackFace[6]
+            && getBackFace()[8] == testBackFace[8]
+
+            && getLeftFace()[0] == testLeftFace[0]
+            && getLeftFace()[2] == testLeftFace[2]
+            && getLeftFace()[4] == testLeftFace[4]
+            && getLeftFace()[6] == testLeftFace[6]
+            && getLeftFace()[8] == testLeftFace[8]
+
+            && getRightFace()[0] == testRightFace[0]
+            && getRightFace()[2] == testRightFace[2]
+            && getRightFace()[4] == testRightFace[4]
+            && getRightFace()[6] == testRightFace[6]
+            && getRightFace()[8] == testRightFace[8]
+
+            && getUpperFace()[0] == testUpperFace[0]
+            && getUpperFace()[2] == testUpperFace[2]
+            && getUpperFace()[4] == testUpperFace[4]
+            && getUpperFace()[6] == testUpperFace[6]
+            && getUpperFace()[8] == testUpperFace[8]
+
+            && getDownFace()[0] == testDownFace[0]
+            && getDownFace()[2] == testDownFace[2]
+            && getDownFace()[4] == testDownFace[4]
+            && getDownFace()[6] == testDownFace[6]
+            && getDownFace()[8] == testDownFace[8]
+        ){
+            cornersAreSolved = true;
+        }
+        return cornersAreSolved;
+    }
+    public boolean checkEdgesIfSolved(){
+        edgesAreSolved = false;
+        if(
+            getFrontFace()[1] == testFrontFace[1]
+            && getFrontFace()[3] == testFrontFace[3]
+            && getFrontFace()[4] == testFrontFace[4]
+            && getFrontFace()[5] == testFrontFace[5]
+            && getFrontFace()[7] == testFrontFace[7]
+
+            && getBackFace()[1] == testBackFace[1]
+            && getBackFace()[3] == testBackFace[3]
+            && getBackFace()[4] == testBackFace[4]
+            && getBackFace()[5] == testBackFace[5]
+            && getBackFace()[7] == testBackFace[7]
+
+            && getLeftFace()[1] == testLeftFace[1]
+            && getLeftFace()[3] == testLeftFace[3]
+            && getLeftFace()[4] == testLeftFace[4]
+            && getLeftFace()[5] == testLeftFace[5]
+            && getLeftFace()[7] == testLeftFace[7]
+
+            && getRightFace()[1] == testRightFace[1]
+            && getRightFace()[3] == testRightFace[3]
+            && getRightFace()[4] == testRightFace[4]
+            && getRightFace()[5] == testRightFace[5]
+            && getRightFace()[7] == testRightFace[7]
+
+            && getUpperFace()[1] == testUpperFace[1]
+            && getUpperFace()[3] == testUpperFace[3]
+            && getUpperFace()[4] == testUpperFace[4]
+            && getUpperFace()[5] == testUpperFace[5]
+            && getUpperFace()[7] == testUpperFace[7]
+
+            && getDownFace()[1] == testDownFace[1]
+            && getDownFace()[3] == testDownFace[3]
+            && getDownFace()[4] == testDownFace[4]
+            && getDownFace()[5] == testDownFace[5]
+            && getDownFace()[7] == testDownFace[7]
+        ){
+            edgesAreSolved = true;
+        }
+        return edgesAreSolved;
+    }
+    //TODO check parity
+
+    public void solveCorners(){
+    //TODO create the check to see if it is solved
+        boolean cornersAreSolved = checkCornersIfSolved();
+        //TODO create the check for boolean isSolved;
+        while(!cornersAreSolved){
+            cornerHotSeat = upperFace[0];
+            switch (cornerHotSeat) {
+                case ACORNER:
+                    cornerAlgB();
+                    cornerAlgC();
+                    cornerAlgD();
+                    cornerAlgF();
+                    cornerAlgG();
+                    cornerAlgH();
+                    cornerAlgI();
+                    cornerAlgJ();
+                    cornerAlgK();
+                    cornerAlgL();
+                    cornerAlgM();
+                    cornerAlgN();
+                    cornerAlgO();
+                    cornerAlgP();
+                    cornerAlgQ();
+                    cornerAlgS();
+                    cornerAlgT();
+                    cornerAlgU();
+                    cornerAlgV();
+                    cornerAlgW();
+                    cornerAlgX();
+                    break;
+                case BCORNER:
+                    cornerAlgB();
+                    break;
+                case CCORNER:
+                    cornerAlgC();
+                    break;
+                case DCORNER:
+                    cornerAlgD();
+                    break;
+                case ECORNER:
+                    cornerAlgB();
+                    cornerAlgC();
+                    cornerAlgD();
+                    cornerAlgF();
+                    cornerAlgG();
+                    cornerAlgH();
+                    cornerAlgI();
+                    cornerAlgJ();
+                    cornerAlgK();
+                    cornerAlgL();
+                    cornerAlgM();
+                    cornerAlgN();
+                    cornerAlgO();
+                    cornerAlgP();
+                    cornerAlgQ();
+                    cornerAlgS();
+                    cornerAlgT();
+                    cornerAlgU();
+                    cornerAlgV();
+                    cornerAlgW();
+                    cornerAlgX();
+                    break;
+                case FCORNER:
+                    cornerAlgF();
+                    break;
+                case GCORNER:
+                    cornerAlgG();
+                    break;
+                case HCORNER:
+                    cornerAlgH();
+                    break;
+                case ICORNER:
+                    cornerAlgI();
+                    break;
+                case JCORNER:
+                    cornerAlgJ();
+                    break;
+                case KCORNER:
+                    cornerAlgK();
+                    break;
+                case LCORNER:
+                    cornerAlgL();
+                    break;
+                case MCORNER:
+                    cornerAlgM();
+                    break;
+                case NCORNER:
+                    cornerAlgN();
+                    break;
+                case OCORNER:
+                    cornerAlgO();
+                    break;
+                case PCORNER:
+                    cornerAlgP();
+                    break;
+                case QCORNER:
+                    cornerAlgQ();
+                    break;
+                case RCORNER:
+                    cornerAlgB();
+                    cornerAlgC();
+                    cornerAlgD();
+                    cornerAlgF();
+                    cornerAlgG();
+                    cornerAlgH();
+                    cornerAlgI();
+                    cornerAlgJ();
+                    cornerAlgK();
+                    cornerAlgL();
+                    cornerAlgM();
+                    cornerAlgN();
+                    cornerAlgO();
+                    cornerAlgP();
+                    cornerAlgQ();
+                    cornerAlgS();
+                    cornerAlgT();
+                    cornerAlgU();
+                    cornerAlgV();
+                    cornerAlgW();
+                    cornerAlgX();
+                    break;
+                case SCORNER:
+                    cornerAlgS();
+                    break;
+                case TCORNER:
+                    cornerAlgT();
+                    break;
+                case UCORNER:
+                    cornerAlgU();
+                    break;
+                case VCORNER:
+                    cornerAlgV();
+                    break;
+                case WCORNER:
+                    cornerAlgW();
+                    break;
+                case XCORNER:
+                    cornerAlgX();
+                    break;
+            }
+            cornersAreSolved = checkCornersIfSolved();
+        }
+
     }
 
     //Turn Methods
@@ -187,8 +439,8 @@ public class Cube {
         tempRightFace[2] = rightFace[0];
         tempRightFace[3] = rightFace[7];
         tempRightFace[5] = rightFace[1];
-        tempRightFace[6] = rightFace[8];
         tempRightFace[7] = rightFace[5];
+        tempRightFace[6] = rightFace[8];
         tempRightFace[8] = rightFace[2];
         /*Front face turn 3,6,9
         3 = Down 3
@@ -242,8 +494,7 @@ public class Cube {
     }
     public void turnRInverse(){
         //Right inverse turn affects 5 faces of the cube, all but the Left face
-        //create temporary arrays for the faces. need to create new String arrays so that the TEMP and originals don't point to the same place on the heap
-        for (int i=0; i < frontFace.length; i++) {
+        for (int i=0; i < rightFace.length; i++) {
             tempFrontFace[i] = frontFace[i];
             tempBackFace[i] = backFace[i];
             tempRightFace[i] = rightFace[i];
@@ -307,19 +558,17 @@ public class Cube {
         tempDownFace[5] = frontFace[5];
         tempDownFace[8] = frontFace[8];
         //update the original faces to match the temp ones
-        for (int i=0; i < frontFace.length; i++) {
+        for (int i=0; i < rightFace.length; i++) {
             frontFace[i] = tempFrontFace[i];
             backFace[i] = tempBackFace[i];
             rightFace[i] = tempRightFace[i];
             upperFace[i] = tempUpperFace[i];
             downFace[i] = tempDownFace[i];
         }
-
         turnList += "R',";
     }
     public void turnL(){
         //Left turn affects 5 faces of the cube, all but the Right face
-        //create temporary arrays for the faces. need to create new String arrays so that the TEMP and originals don't point to the same place on the heap
         for (int i=0; i < leftFace.length; i++) {
             tempFrontFace[i] = frontFace[i];
             tempBackFace[i] = backFace[i];
@@ -1292,7 +1541,6 @@ public class Cube {
 
         //Algs for the various corner pieces. These algs consist of: 1. set-up moves, 2. the cornerSwap alg, 3. reversing the set-up moves.
         //To note, the letter P has no alg of its own because it is the same as the cornerSwap. there is also no agl for A,E, or R because the method solves all other pieces first and then A is inherently solved
-
     public void cornerAlgB(){
         turnR();
         turnDInverse();
@@ -1312,6 +1560,7 @@ public class Cube {
         turnR();
         turnFInverse();
     }
+
     public void cornerAlgF(){
         turnF2();
         cornerSwap();

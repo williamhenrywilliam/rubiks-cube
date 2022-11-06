@@ -1,3 +1,5 @@
+package com.whycoding.rubikscube;
+
 public class EdgePiece {
     private String pieceType = "Edge";
     private int numberOfSides = 2;

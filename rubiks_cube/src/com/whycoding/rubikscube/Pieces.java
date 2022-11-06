@@ -1,3 +1,5 @@
+package com.whycoding.rubikscube;
+
 public enum Pieces {
     AEDGE("Blue", "A"),
     BEDGE("Blue", "B"),
@@ -61,7 +63,4 @@ public enum Pieces {
         this.color = color;
         this.letter = letter;
     }
-
-
-
 }
