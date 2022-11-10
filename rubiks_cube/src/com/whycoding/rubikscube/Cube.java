@@ -18,21 +18,21 @@ public class Cube {
      number the corners
      */
 
+    //these arrays represent the actual faces of the cube while the program is running
     private Pieces[] frontFace = {Pieces.ICORNER, Pieces.IEDGE, Pieces.JCORNER, Pieces.LEDGE, Pieces.REDCENTER, Pieces.JEDGE, Pieces.LCORNER, Pieces.KEDGE, Pieces.KCORNER};
     private Pieces[] backFace = {Pieces.QCORNER, Pieces.QEDGE, Pieces.RCORNER, Pieces.TEDGE, Pieces.ORANGECENTER, Pieces.REDGE, Pieces.TCORNER, Pieces.SEDGE, Pieces.SCORNER};
     private Pieces[] leftFace = {Pieces.ECORNER, Pieces.EEDGE, Pieces.FCORNER, Pieces.HEDGE, Pieces.WHITECENTER, Pieces.FEDGE, Pieces.HCORNER, Pieces.GEDGE, Pieces.GCORNER};
     private Pieces[] rightFace = {Pieces.MCORNER, Pieces.MEDGE, Pieces.NCORNER, Pieces.PEDGE, Pieces.YELLOWCENTER, Pieces.NEDGE, Pieces.PCORNER, Pieces.OEDGE, Pieces.OCORNER};
     private Pieces[] upperFace = {Pieces.ACORNER, Pieces.AEDGE, Pieces.BCORNER, Pieces.DEDGE, Pieces.BLUECENTER, Pieces.BEDGE, Pieces.DCORNER, Pieces.CEDGE, Pieces.CCORNER};
     private Pieces[] downFace = {Pieces.UCORNER, Pieces.UEDGE, Pieces.VCORNER, Pieces.XEDGE, Pieces.GREENCENTER, Pieces.VEDGE, Pieces.XCORNER, Pieces.WEDGE, Pieces.WCORNER};
-
+    //these arrays are temp arrays, that hold the state of each face during the turn methods
     private Pieces[] tempFrontFace = new Pieces[9];
     private Pieces[] tempBackFace = new Pieces[9];
     private Pieces[] tempRightFace = new Pieces[9];
     private Pieces[] tempLeftFace = new Pieces[9];
     private Pieces[] tempUpperFace = new Pieces[9];
     private Pieces[] tempDownFace = new Pieces[9];
-
-
+    //these arrays are used when checking to see if the cube (or part of the cube is solved)
     private Pieces[] testFrontFace = {Pieces.ICORNER, Pieces.IEDGE, Pieces.JCORNER, Pieces.LEDGE, Pieces.REDCENTER, Pieces.JEDGE, Pieces.LCORNER, Pieces.KEDGE, Pieces.KCORNER};
     private Pieces[] testBackFace = {Pieces.QCORNER, Pieces.QEDGE, Pieces.RCORNER, Pieces.TEDGE, Pieces.ORANGECENTER, Pieces.REDGE, Pieces.TCORNER, Pieces.SEDGE, Pieces.SCORNER};
     private Pieces[] testLeftFace = {Pieces.ECORNER, Pieces.EEDGE, Pieces.FCORNER, Pieces.HEDGE, Pieces.WHITECENTER, Pieces.FEDGE, Pieces.HCORNER, Pieces.GEDGE, Pieces.GCORNER};
@@ -43,6 +43,7 @@ public class Cube {
     boolean cubeIsSolved;
     boolean cornersAreSolved;
     boolean edgesAreSolved;
+    boolean parityNeeded;
     private String turnList = "";
     private int numberOfTurnTypes = 12; //6 faces + inverses
     //TODO hotseats
@@ -267,35 +268,10 @@ public class Cube {
     //TODO check parity
 
     public void solveCorners(){
-    //TODO create the check to see if it is solved
         boolean cornersAreSolved = checkCornersIfSolved();
-        //TODO create the check for boolean isSolved;
         while(!cornersAreSolved){
-            cornerHotSeat = upperFace[0];
+            cornerHotSeat = getUpperFace()[0];
             switch (cornerHotSeat) {
-                case ACORNER:
-                    cornerAlgB();
-                    cornerAlgC();
-                    cornerAlgD();
-                    cornerAlgF();
-                    cornerAlgG();
-                    cornerAlgH();
-                    cornerAlgI();
-                    cornerAlgJ();
-                    cornerAlgK();
-                    cornerAlgL();
-                    cornerAlgM();
-                    cornerAlgN();
-                    cornerAlgO();
-                    cornerAlgP();
-                    cornerAlgQ();
-                    cornerAlgS();
-                    cornerAlgT();
-                    cornerAlgU();
-                    cornerAlgV();
-                    cornerAlgW();
-                    cornerAlgX();
-                    break;
                 case BCORNER:
                     cornerAlgB();
                     break;
@@ -304,29 +280,6 @@ public class Cube {
                     break;
                 case DCORNER:
                     cornerAlgD();
-                    break;
-                case ECORNER:
-                    cornerAlgB();
-                    cornerAlgC();
-                    cornerAlgD();
-                    cornerAlgF();
-                    cornerAlgG();
-                    cornerAlgH();
-                    cornerAlgI();
-                    cornerAlgJ();
-                    cornerAlgK();
-                    cornerAlgL();
-                    cornerAlgM();
-                    cornerAlgN();
-                    cornerAlgO();
-                    cornerAlgP();
-                    cornerAlgQ();
-                    cornerAlgS();
-                    cornerAlgT();
-                    cornerAlgU();
-                    cornerAlgV();
-                    cornerAlgW();
-                    cornerAlgX();
                     break;
                 case FCORNER:
                     cornerAlgF();
@@ -364,29 +317,6 @@ public class Cube {
                 case QCORNER:
                     cornerAlgQ();
                     break;
-                case RCORNER:
-                    cornerAlgB();
-                    cornerAlgC();
-                    cornerAlgD();
-                    cornerAlgF();
-                    cornerAlgG();
-                    cornerAlgH();
-                    cornerAlgI();
-                    cornerAlgJ();
-                    cornerAlgK();
-                    cornerAlgL();
-                    cornerAlgM();
-                    cornerAlgN();
-                    cornerAlgO();
-                    cornerAlgP();
-                    cornerAlgQ();
-                    cornerAlgS();
-                    cornerAlgT();
-                    cornerAlgU();
-                    cornerAlgV();
-                    cornerAlgW();
-                    cornerAlgX();
-                    break;
                 case SCORNER:
                     cornerAlgS();
                     break;
@@ -405,10 +335,176 @@ public class Cube {
                 case XCORNER:
                     cornerAlgX();
                     break;
+                default:
+                    if(getUpperFace()[2] != Pieces.BCORNER){
+                        cornerAlgB();
+                    } else if (getUpperFace()[8] != Pieces.CCORNER){
+                        cornerAlgC();
+                    } else if (getUpperFace()[6] != Pieces.DCORNER){
+                        cornerAlgD();
+                    } else if (getDownFace()[0] != Pieces.UCORNER){
+                        cornerAlgU();
+                    } else if (getDownFace()[2] != Pieces.VCORNER){
+                        cornerAlgV();
+                    } else if (getDownFace()[8] != Pieces.WCORNER){
+                        cornerAlgW();
+                    } else if (getDownFace()[6] != Pieces.XCORNER){
+                        cornerAlgX();
+                    }
+                    break;
             }
             cornersAreSolved = checkCornersIfSolved();
         }
-
+    }
+    public void solveEdges(){
+        boolean edgesAreSolved = checkEdgesIfSolved();
+        int counter = 0;
+        while(!edgesAreSolved){
+            edgeHotSeat = getDownFace()[1];
+            switch (edgeHotSeat){
+                case AEDGE:
+                    edgeAlgA();
+                    counter++;
+                    break;
+                case BEDGE:
+                    edgeAlgB();
+                    counter++;
+                    break;
+                case CEDGE:
+                    if(counter % 2 == 1){
+                        edgeAlgC();
+                    }else{
+                        edgeAlgW();
+                    }
+                    counter++;
+                    break;
+                case DEDGE:
+                    edgeAlgD();
+                    counter++;
+                    break;
+                case EEDGE:
+                    edgeAlgE();
+                    counter++;
+                    break;
+                case FEDGE:
+                    edgeAlgF();
+                    counter++;
+                    break;
+                case GEDGE:
+                    edgeAlgG();
+                    counter++;
+                    break;
+                case HEDGE:
+                    edgeAlgH();
+                    counter++;
+                    break;
+                case IEDGE:
+                    if(counter % 2 == 1){
+                        edgeAlgI();
+                    }else{
+                        edgeAlgS();
+                    }
+                    counter++;
+                    break;
+                case JEDGE:
+                    edgeAlgJ();
+                    counter++;
+                    break;
+                case LEDGE:
+                    edgeAlgL();
+                    counter++;
+                    break;
+                case MEDGE:
+                    edgeAlgM();
+                    counter++;
+                    break;
+                case NEDGE:
+                    edgeAlgN();
+                    counter++;
+                    break;
+                case OEDGE:
+                    edgeAlgO();
+                    counter++;
+                    break;
+                case PEDGE:
+                    edgeAlgP();
+                    counter++;
+                    break;
+                case QEDGE:
+                    edgeAlgQ();
+                    counter++;
+                    break;
+                case REDGE:
+                    edgeAlgR();
+                    counter++;
+                    break;
+                case SEDGE:
+                    if(counter % 2 == 1){
+                        edgeAlgS();
+                    }else{
+                        edgeAlgI();
+                    }
+                    counter++;
+                    break;
+                case TEDGE:
+                    edgeAlgT();
+                    counter++;
+                    break;
+                case VEDGE:
+                    edgeAlgV();
+                    counter++;
+                    break;
+                case WEDGE:
+                    if(counter % 2 == 1){
+                        edgeAlgW();
+                    }else{
+                        edgeAlgC();
+                    }
+                    counter++;
+                    break;
+                case XEDGE:
+                    edgeAlgX();
+                    counter++;
+                    break;
+                default:
+                    if(getUpperFace()[1] != Pieces.AEDGE){
+                        edgeAlgA();
+                        counter++;
+                    }else if(getUpperFace()[5] != Pieces.BEDGE){
+                        edgeAlgB();
+                        counter++;
+                    }else if(getUpperFace()[7] != Pieces.CEDGE){
+                        edgeAlgC();
+                        counter++;
+                    }else if(getUpperFace()[3] != Pieces.DEDGE){
+                        edgeAlgD();
+                        counter++;
+                    }else if(getFrontFace()[3] != Pieces.LEDGE){
+                        edgeAlgL();
+                        counter++;
+                    }else if(getFrontFace()[5] != Pieces.JEDGE){
+                        edgeAlgJ();
+                        counter++;
+                    }else if(getBackFace()[5] != Pieces.REDGE){
+                        edgeAlgR();
+                        counter++;
+                    }else if(getBackFace()[3] != Pieces.TEDGE){
+                        edgeAlgT();
+                        counter++;
+                    }else if(getDownFace()[3] != Pieces.XEDGE){
+                        edgeAlgX();
+                        counter++;
+                    }else if(getDownFace()[5] != Pieces.VEDGE){
+                        edgeAlgV();
+                        counter++;
+                    }else if(getDownFace()[7] != Pieces.WEDGE){
+                        edgeAlgW();
+                        counter++;
+                    }
+                    break;
+            }
+            edgesAreSolved = checkEdgesIfSolved();
+        }
     }
 
     //Turn Methods
@@ -1496,51 +1592,8 @@ public class Cube {
         turnUInverse();
     }
 
-        //special algorithms for edge pieces
-    public void edgeAlgS(){
-        turnM2();
-        turnD();
-        starU();
-        turnMInverse();
-        starU();
-        turnM();
-        turnDInverse();
-    }
-    public void edgeAlgI(){
-        turnD();
-        turnMInverse();
-        starU();
-        turnM();
-        starU();
-        turnDInverse();
-        turnM2();
-    }
-    public void edgeAlgC(){
-        turnU2();
-        turnMInverse();
-        turnU2();
-        turnMInverse();
-    }
-    public void edgeAlgW(){
-        turnM();
-        turnU2();
-        turnM();
-        turnU2();
-    }
-    public void edgeAlgQ(){
-        turnBInverse();
-        turnR();
-        turnB();
-        starU();
-        turnM2();
-        starU();
-        turnBInverse();
-        turnRInverse();
-        turnB();
-    }
-
-        //Algs for the various corner pieces. These algs consist of: 1. set-up moves, 2. the cornerSwap alg, 3. reversing the set-up moves.
-        //To note, the letter P has no alg of its own because it is the same as the cornerSwap. there is also no agl for A,E, or R because the method solves all other pieces first and then A is inherently solved
+        //Algs for the  corner pieces. These algs consist of: 1. set-up moves, 2. the cornerSwap alg, 3. reversing the set-up moves.
+        //there is  no agl for A,E, or R because the method solves all other pieces first and then A is inherently solved
     public void cornerAlgB(){
         turnR();
         turnDInverse();
@@ -1560,7 +1613,6 @@ public class Cube {
         turnR();
         turnFInverse();
     }
-
     public void cornerAlgF(){
         turnF2();
         cornerSwap();
@@ -1667,6 +1719,211 @@ public class Cube {
         turnF();
         turnDInverse();
     }
+
+        //Algs for the edge pieces. set up moves, edgeswap alg, reverse set up move. there is no alg for U and K because it is the last piece to be solved
+        //the Algs for S,I,W,C and Q are special.
+    public void edgeAlgA(){
+        edgeSwap();
+    }
+    public void edgeAlgB(){
+        turnRInverse();
+        turnU();
+        turnR();
+        turnUInverse();
+        edgeSwap();
+        turnU();
+        turnRInverse();
+        turnUInverse();
+        turnR();
+    }
+    public void edgeAlgC(){
+        turnU2();
+        turnMInverse();
+        turnU2();
+        turnMInverse();
+    }
+    public void edgeAlgD(){
+        turnL();
+        turnUInverse();
+        turnLInverse();
+        turnU();
+        edgeSwap();
+        turnUInverse();
+        turnL();
+        turnU();
+        turnLInverse();
+    }
+    public void edgeAlgE(){
+        turnB();
+        turnLInverse();
+        turnBInverse();
+        edgeSwap();
+        turnB();
+        turnL();
+        turnBInverse();
+    }
+    public void edgeAlgF(){
+        turnB();
+        turnL2();
+        turnBInverse();
+        edgeSwap();
+        turnB();
+        turnL2();
+        turnBInverse();
+    }
+    public void edgeAlgG(){
+        turnB();
+        turnL();
+        turnBInverse();
+        edgeSwap();
+        turnB();
+        turnLInverse();
+        turnBInverse();
+    }
+    public void edgeAlgH(){
+        turnLInverse();
+        turnB();
+        turnL();
+        turnBInverse();
+        edgeSwap();
+        turnB();
+        turnLInverse();
+        turnBInverse();
+        turnL();
+    }
+    public void edgeAlgI(){
+        turnD();
+        turnMInverse();
+        starU();
+        turnM();
+        starU();
+        turnDInverse();
+        turnM2();
+    }
+    public void edgeAlgJ(){
+        turnU();
+        turnR();
+        turnUInverse();
+        edgeSwap();
+        turnU();
+        turnRInverse();
+        turnUInverse();
+    }
+    public void edgeAlgL(){
+        turnUInverse();
+        turnLInverse();
+        turnU();
+        edgeSwap();
+        turnUInverse();
+        turnL();
+        turnU();
+    }
+    public void edgeAlgM(){
+        turnBInverse();
+        turnR();
+        turnB();
+        edgeSwap();
+        turnBInverse();
+        turnRInverse();
+        turnB();
+    }
+    public void edgeAlgN(){
+        turnR();
+        turnBInverse();
+        turnRInverse();
+        turnB();
+        edgeSwap();
+        turnBInverse();
+        turnR();
+        turnB();
+        turnRInverse();
+    }
+    public void edgeAlgO(){
+        turnBInverse();
+        turnRInverse();
+        turnB();
+        edgeSwap();
+        turnBInverse();
+        turnR();
+        turnB();
+    }
+    public void edgeAlgP(){
+        turnBInverse();
+        turnR2();
+        turnB();
+        edgeSwap();
+        turnBInverse();
+        turnR2();
+        turnB();
+    }
+    public void edgeAlgQ(){
+        turnBInverse();
+        turnR();
+        turnB();
+        starU();
+        turnM2();
+        starU();
+        turnBInverse();
+        turnRInverse();
+        turnB();
+    }
+    public void edgeAlgR(){
+        turnUInverse();
+        turnL();
+        turnU();
+        edgeSwap();
+        turnUInverse();
+        turnLInverse();
+        turnU();
+    }
+    public void edgeAlgS(){
+        turnM2();
+        turnD();
+        starU();
+        turnMInverse();
+        starU();
+        turnM();
+        turnDInverse();
+    }
+    public void edgeAlgT(){
+        turnU();
+        turnRInverse();
+        turnUInverse();
+        edgeSwap();
+        turnU();
+        turnR();
+        turnUInverse();
+    }
+    public void edgeAlgV(){
+        turnU();
+        turnR2();
+        turnUInverse();
+        edgeSwap();
+        turnU();
+        turnR2();
+        turnUInverse();
+    }
+    public void edgeAlgW(){
+        turnM();
+        turnU2();
+        turnM();
+        turnU2();
+    }
+    public void edgeAlgX(){
+        turnUInverse();
+        turnL2();
+        turnU();
+        edgeSwap();
+        turnUInverse();
+        turnL2();
+        turnU();
+    }
+
+
+
+
+
+
 
     //below is the final curly brace of the class
 }

@@ -5,6 +5,7 @@ put the instructions into a README.md
 need to track the turns that are made. should i do that in the Cube calss or Main? how to do it so it resets everytime I run.
 for cornersolver.... if hotseat is ever cornerA, cornerR, or cornerE, we will ahve to figure out how to grab unsolved corners (could have it solve random corners? or go through all of them? not hte most efficient, but would work?
 make a default case for cornersolver
+cornersolver is working. it might be the parity!
  */
 
 
@@ -16,83 +17,19 @@ public class Main {
         cube.printCube();
         cube.randomize();
         System.out.println("*************");
+        System.out.println(cube.getTurnList());
+        System.out.println("*************");
         cube.printCube();
-        cube.solveCorners();
+        cube.solveEdges();
+        System.out.println("*************");
+        System.out.println(cube.getTurnList());
         System.out.println("*************");
         cube.printCube();
 
 
 
 
-//        cube.printMove("Corner Swap Alg");
-//        cube.edgeAlgI();
-//        System.out.println(cube.getTurnList());
-//        cube.printCube();
 
-//        cube.printMove("Rotate Right Face");
-//        cube.turnR();
-//        cube.printCube();
-//        cube.printMove("Rotate Right Face twice");
-//        cube.turnR2();
-//        cube.printCube();
-//        cube.printMove("Rotate Right Inverse");
-//        cube.turnRInverse();
-//        cube.printCube();
-//        cube.printMove("Rotate Left Face");
-//        cube.turnL();
-//        cube.printCube();
-//        cube.printMove("Rotate Left Face twice");
-//        cube.turnL2();
-//        cube.printCube();
-//        cube.printMove("Rotate Left Inverse");
-//        cube.turnLInverse();
-//        cube.printCube();
-//        cube.printMove("Rotate Upper Face");
-//        cube.turnU();
-//        cube.printCube();
-//        cube.printMove("Rotate Upper Face twice");
-//        cube.turnU2();
-//        cube.printCube();
-//        cube.printMove("Rotate Upper Inverse ");
-//        cube.turnUInverse();
-//        cube.printCube();
-//        cube.printMove("Rotate Down Face");
-//        cube.turnD();
-//        cube.printCube();
-//        cube.printMove("Rotate Down Face twice");
-//        cube.turnD2();
-//        cube.printCube();
-//        cube.printMove("Rotate Down Inverse ");
-//        cube.turnDInverse();
-//        cube.printCube();
-//        cube.printMove("Rotate Front Face");
-//        cube.turnF();
-//        cube.printCube();
-//        cube.printMove("Rotate Front Face twice");
-//        cube.turnF2();
-//        cube.printCube();
-//        cube.printMove("Rotate Front Inverse ");
-//        cube.turnFInverse();
-//        cube.printCube();
-//        cube.printMove("Rotate Back Face");
-//        cube.turnB();
-//        cube.printCube();
-//        cube.printMove("Rotate Back Face twice");
-//        cube.turnB2();
-//        cube.printCube();
-//        cube.printMove("Rotate Back Inverse ");
-//        cube.turnBInverse();
-//        cube.printCube();
-//        cube.printMove("Rotate Middle Face");
-//        cube.turnM();
-//        cube.printCube();
-//        cube.printMove("Rotate Middle Face twice");
-//        cube.turnM2();
-//        cube.printCube();
-//        cube.printMove("Rotate Middle Inverse");
-//        cube.turnMInverse();
-//        cube.printCube();
-//        System.out.println(cube.getTurnList());
 
 //below is the last curly brace of main
     }
