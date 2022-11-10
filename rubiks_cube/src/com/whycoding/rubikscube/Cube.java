@@ -40,10 +40,11 @@ public class Cube {
     private Pieces[] testUpperFace = {Pieces.ACORNER, Pieces.AEDGE, Pieces.BCORNER, Pieces.DEDGE, Pieces.BLUECENTER, Pieces.BEDGE, Pieces.DCORNER, Pieces.CEDGE, Pieces.CCORNER};
     private Pieces[] testDownFace = {Pieces.UCORNER, Pieces.UEDGE, Pieces.VCORNER, Pieces.XEDGE, Pieces.GREENCENTER, Pieces.VEDGE, Pieces.XCORNER, Pieces.WEDGE, Pieces.WCORNER};
 
-    boolean cubeIsSolved;
-    boolean cornersAreSolved;
-    boolean edgesAreSolved;
-    boolean parityNeeded;
+    private boolean cubeIsSolved;
+    private boolean cornersAreSolved;
+    private boolean edgesAreSolved;
+    private boolean parityNeeded;
+    private int parityCounter;
     private String turnList = "";
     private int numberOfTurnTypes = 12; //6 faces + inverses
     //TODO hotseats
@@ -73,6 +74,12 @@ public class Cube {
     }
     public void setCubeIsSolved(boolean cubeIsSolved) {
         this.cubeIsSolved = cubeIsSolved;
+    }
+    public int getParityCounter() {
+        return parityCounter;
+    }
+    public void setParityCounter(int parityCounter) {
+        this.parityCounter = parityCounter;
     }
 
     //Methods
@@ -115,7 +122,7 @@ public class Cube {
         //Cube state
     public void randomize(){
         double selector;
-        for (int i = 0; i < 25; i++) {
+        for (int i = 0; i < 20; i++) {
             selector = ((Math.random()) * numberOfTurnTypes) + 1;
             switch ((int) selector) {
                 case 1:
@@ -225,7 +232,7 @@ public class Cube {
     public boolean checkEdgesIfSolved(){
         edgesAreSolved = false;
         if(
-            getFrontFace()[1] == testFrontFace[1]
+            (getFrontFace()[1] == testFrontFace[1]
             && getFrontFace()[3] == testFrontFace[3]
             && getFrontFace()[4] == testFrontFace[4]
             && getFrontFace()[5] == testFrontFace[5]
@@ -259,7 +266,43 @@ public class Cube {
             && getDownFace()[3] == testDownFace[3]
             && getDownFace()[4] == testDownFace[4]
             && getDownFace()[5] == testDownFace[5]
-            && getDownFace()[7] == testDownFace[7]
+            && getDownFace()[7] == testDownFace[7])
+            ||
+            (getFrontFace()[1] == testBackFace[7]
+            && getFrontFace()[3] == testFrontFace[3]
+            && getFrontFace()[4] == testBackFace[4]
+            && getFrontFace()[5] == testFrontFace[5]
+            && getFrontFace()[7] == testFrontFace[7]
+
+            && getBackFace()[1] == testBackFace[1]
+            && getBackFace()[3] == testBackFace[3]
+            && getBackFace()[4] == testFrontFace[4]
+            && getBackFace()[5] == testBackFace[5]
+            && getBackFace()[7] == testFrontFace[1]
+
+            && getLeftFace()[1] == testLeftFace[1]
+            && getLeftFace()[3] == testLeftFace[3]
+            && getLeftFace()[4] == testLeftFace[4]
+            && getLeftFace()[5] == testLeftFace[5]
+            && getLeftFace()[7] == testLeftFace[7]
+
+            && getRightFace()[1] == testRightFace[1]
+            && getRightFace()[3] == testRightFace[3]
+            && getRightFace()[4] == testRightFace[4]
+            && getRightFace()[5] == testRightFace[5]
+            && getRightFace()[7] == testRightFace[7]
+
+            && getUpperFace()[1] == testUpperFace[1]
+            && getUpperFace()[3] == testUpperFace[3]
+            && getUpperFace()[4] == testDownFace[4]
+            && getUpperFace()[5] == testUpperFace[5]
+            && getUpperFace()[7] == testDownFace[7]
+
+            && getDownFace()[1] == testDownFace[1]
+            && getDownFace()[3] == testDownFace[3]
+            && getDownFace()[4] == testUpperFace[4]
+            && getDownFace()[5] == testDownFace[5]
+            && getDownFace()[7] == testUpperFace[7])
         ){
             edgesAreSolved = true;
         }
@@ -358,7 +401,7 @@ public class Cube {
     }
     public void solveEdges(){
         boolean edgesAreSolved = checkEdgesIfSolved();
-        int counter = 0;
+        int counter = 1;
         while(!edgesAreSolved){
             edgeHotSeat = getDownFace()[1];
             switch (edgeHotSeat){
@@ -473,10 +516,14 @@ public class Cube {
                     }else if(getUpperFace()[5] != Pieces.BEDGE){
                         edgeAlgB();
                         counter++;
-                    }else if(getUpperFace()[7] != Pieces.CEDGE){
+                    }else if(getUpperFace()[7] != Pieces.CEDGE && counter % 2 == 1){
                         edgeAlgC();
                         counter++;
-                    }else if(getUpperFace()[3] != Pieces.DEDGE){
+                    }else if(getDownFace()[7] != Pieces.CEDGE && counter % 2 == 0){
+                        edgeAlgW();
+                        counter++;
+                    }
+                    else if(getUpperFace()[3] != Pieces.DEDGE){
                         edgeAlgD();
                         counter++;
                     }else if(getFrontFace()[3] != Pieces.LEDGE){
@@ -497,14 +544,25 @@ public class Cube {
                     }else if(getDownFace()[5] != Pieces.VEDGE){
                         edgeAlgV();
                         counter++;
-                    }else if(getDownFace()[7] != Pieces.WEDGE){
+                    }else if(getDownFace()[7] != Pieces.WEDGE && counter % 2 == 1){
                         edgeAlgW();
+                        counter++;
+                    }else if(getUpperFace()[7] != Pieces.WEDGE && counter % 2 == 0){
+                        edgeAlgC();
                         counter++;
                     }
                     break;
             }
             edgesAreSolved = checkEdgesIfSolved();
         }
+//        if(counter % 2 == 1) {
+//            paritySwap();
+//        }
+        setParityCounter(counter);
+    }
+    public void solveCube(){
+        solveCorners();
+        solveEdges();
     }
 
     //Turn Methods

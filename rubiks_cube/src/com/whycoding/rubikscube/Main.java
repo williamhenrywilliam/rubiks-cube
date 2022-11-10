@@ -17,20 +17,14 @@ public class Main {
         cube.printCube();
         cube.randomize();
         System.out.println("*************");
-        System.out.println(cube.getTurnList());
-        System.out.println("*************");
         cube.printCube();
-        cube.solveEdges();
-        System.out.println("*************");
-        System.out.println(cube.getTurnList());
+        cube.solveCube();
         System.out.println("*************");
         cube.printCube();
 
 
 
-
-
-
+        
 //below is the last curly brace of main
     }
 //below is the curly brace of the class
